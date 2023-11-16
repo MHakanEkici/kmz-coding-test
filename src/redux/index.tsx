@@ -8,9 +8,13 @@ import {serviceMiddlewares} from '../services';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import {categoryService} from '../services/CategoryService';
 import authSlice from './AuthSlice';
+import {productService} from '../services/ProductService';
+import {basketService} from '../services/BasketService';
 
 const rootReducer: Reducer = combineReducers({
   [categoryService.reducerPath]: categoryService.reducer,
+  [productService.reducerPath]: productService.reducer,
+  [basketService.reducerPath]: basketService.reducer,
   auth: authSlice,
 });
 

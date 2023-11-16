@@ -18,14 +18,4 @@ export default StyleSheet.create({
     paddingLeft: 8,
     backgroundColor: 'white',
   },
-  button: {
-    backgroundColor: '#FF6347',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
 });

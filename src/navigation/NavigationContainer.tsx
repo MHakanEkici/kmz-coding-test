@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import routes from './routes';
@@ -16,11 +16,6 @@ export const Stack = createNativeStackNavigator<NavigationStackParamList>();
 
 function NavigationContainter(): JSX.Element {
   const userData = useSelector((state: RootState) => state.auth.userData);
-
-  useEffect(() => {
-    console.log('navigation:');
-    console.log(userData);
-  }, [userData]);
 
   return (
     <NavigationContainer>
