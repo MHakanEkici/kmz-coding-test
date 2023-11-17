@@ -23,6 +23,7 @@ export default function LoginScreen(): JSX.Element {
 
   const handleLogin = async () => {
     const requestData: LoginDto = {
+      //TODO
       username: 'destek@akilliticaret.com',
       password: 'at253545',
     };
@@ -32,7 +33,9 @@ export default function LoginScreen(): JSX.Element {
 
       if (loginResponse && loginResponse?.data && loginResponse?.data.status) {
         const response: UserData = loginResponse.data;
-        dispatch(setUserData(response));
+        dispatch(
+          setUserData({...response, data: {...response.data, userId: 675}}),
+        );
         setIsLoading(false);
       } else {
         onLoginFailed();

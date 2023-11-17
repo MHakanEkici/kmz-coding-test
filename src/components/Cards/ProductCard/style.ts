@@ -1,9 +1,5 @@
 import {StyleSheet} from 'react-native';
-import getResponsiveValue, {
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  colors,
-} from '../../../constants';
+import getResponsiveValue, {SCREEN_WIDTH, colors} from '../../../constants';
 
 export default StyleSheet.create({
   container: {
@@ -14,7 +10,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.3,
     height: SCREEN_WIDTH * 0.42,
-    shadowColor: 'rgb(110,142,204)',
+    shadowColor: colors.shadow_color,
     elevation: getResponsiveValue(3),
     shadowOffset: {
       width: 0,

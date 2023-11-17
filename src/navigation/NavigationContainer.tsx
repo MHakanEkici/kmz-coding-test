@@ -23,7 +23,7 @@ function NavigationContainter(): JSX.Element {
         {userData ? (
           <Stack.Screen
             options={{
-              headerShown: true,
+              headerShown: false,
             }}
             component={MainTab}
             name={routes.MAIN_TAB}

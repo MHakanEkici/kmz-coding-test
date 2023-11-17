@@ -5,11 +5,11 @@ export default StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     padding: getResponsiveValue(5),
-    paddingTop: getResponsiveValue(10),
     borderRadius: getResponsiveValue(15),
     alignItems: 'center',
+    justifyContent: 'center',
     width: SCREEN_WIDTH * 0.3,
-    height: SCREEN_WIDTH * 0.36,
+    height: SCREEN_WIDTH * 0.1,
     shadowColor: colors.shadow_color,
     elevation: getResponsiveValue(3),
     shadowOffset: {
@@ -19,15 +19,9 @@ export default StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: getResponsiveValue(4),
   },
-  image: {
-    height: SCREEN_WIDTH * 0.22,
-    aspectRatio: '1/1',
-    alignSelf: 'center',
-  },
   name: {
     color: colors.black_matte,
-    fontSize: getResponsiveValue(12),
-    marginTop: getResponsiveValue(5),
+    fontSize: getResponsiveValue(11),
     flexWrap: 'wrap',
     textAlign: 'center',
   },

@@ -10,6 +10,7 @@ export type LoginResponse = {
 export type UserData = {
   status: boolean;
   data: {
+    userId?: number;
     token: string;
     refreshToken: string;
     expiration: string;
