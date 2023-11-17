@@ -34,7 +34,7 @@ export default function LoginScreen(): JSX.Element {
       if (loginResponse && loginResponse?.data && loginResponse?.data.status) {
         const response: UserData = loginResponse.data;
         dispatch(
-          setUserData({...response, data: {...response.data, userId: 675}}),
+          setUserData({...response, data: {...response.data, userId: 675}}), //Random Test UserId
         );
         setIsLoading(false);
       } else {
