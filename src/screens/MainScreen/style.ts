@@ -14,6 +14,12 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  left_icon_container: {
+    marginLeft: getResponsiveValue(8),
+    padding: getResponsiveValue(5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   seperator: {
     width: SCREEN_WIDTH * 0.03,
   },

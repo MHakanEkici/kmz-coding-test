@@ -7,7 +7,9 @@ import {
   Button,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 import styles from './style';
@@ -28,6 +30,10 @@ import MainFlatList from '../../components/MainFlatList';
 import Loading from '../../components/Loading';
 import ProductCard from '../../components/Cards/ProductCard';
 import SubCategoryCard from '../../components/Cards/SubCategoryCard';
+import getResponsiveValue, {colors} from '../../constants';
+import CategoriesModal from '../../components/CategoriesModal';
+
+const seperator = <View style={styles.seperator} />;
 
 export default function MainScreen(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
@@ -35,6 +41,23 @@ export default function MainScreen(): JSX.Element {
   );
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<Category | null>(null);
+  const [categoriesModalVisible, setCategoriesModalVisible] =
+    useState<boolean>(false);
+
+  const navigation = useNavigation();
+
+  navigation.setOptions({
+    headerLeft: () => (
+      <View style={styles.left_icon_container}>
+        <Icon
+          name="menu"
+          size={getResponsiveValue(30)}
+          color={colors.theme}
+          onPress={() => setCategoriesModalVisible(true)}
+        />
+      </View>
+    ),
+  });
 
   const userData = useSelector((state: RootState) => state.auth.userData);
 
@@ -88,18 +111,21 @@ export default function MainScreen(): JSX.Element {
     };
 
     await addBasket(addbasketData);
-
-    console.log('basket:');
-    console.log(basket);
-    console.log('addBasketResponse:');
-    console.log(addBasketResponse);
   }
 
-  function handleSelectCategory(category: Category) {
-    setSelectedCategory(category);
-    getProducts(category.id);
-    getSubCategories(category.id);
-  }
+  const handleSelectCategory = useCallback(
+    (category: Category) => {
+      setSelectedCategory(category);
+      setCategoriesModalVisible(false);
+      getProducts(category.id);
+      getSubCategories(category.id);
+    },
+    [getProducts, getSubCategories],
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setCategoriesModalVisible(false);
+  }, []);
 
   const renderCategories = ({item, index}: RenderCategoriesProps) => (
     <CategoryCard
@@ -131,8 +157,6 @@ export default function MainScreen(): JSX.Element {
     />
   );
 
-  const seperator = <View style={styles.seperator} />;
-
   return (
     <SafeAreaView style={styles.container}>
       {isCategoriesLoading || isProductsLoading ? (
@@ -140,6 +164,7 @@ export default function MainScreen(): JSX.Element {
       ) : selectedCategory && products ? (
         <>
           <FlatList
+            keyExtractor={item => item.id.toString()}
             data={subCategories?.data?.categories}
             renderItem={renderSubCategories}
             style={styles.subCategory_list_container}
@@ -155,6 +180,12 @@ export default function MainScreen(): JSX.Element {
           renderItem={renderCategories}
         />
       )}
+      <CategoriesModal
+        isVisible={categoriesModalVisible}
+        data={categories?.data?.categories}
+        onSelect={handleSelectCategory}
+        closeModal={handleCloseModal}
+      />
     </SafeAreaView>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -21,11 +21,11 @@ export default function LoginScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     const requestData: LoginDto = {
       //TODO
-      username: 'destek@akilliticaret.com',
-      password: 'at253545',
+      username: username,
+      password: password,
     };
     try {
       setIsLoading(true);
@@ -44,12 +44,26 @@ export default function LoginScreen(): JSX.Element {
       onLoginFailed();
       console.error('Login error:', e);
     }
-  };
+  }, []);
 
-  function onLoginFailed() {
+  const onLoginFailed = useCallback(() => {
     Alert.alert('Giriş başarısız, lütfen bilgileriniz kontrol edin.');
     setIsLoading(false);
-  }
+  }, []);
+
+  const handleUsernameChange = useCallback(
+    text => {
+      setUsername(text);
+    },
+    [setUsername],
+  );
+
+  const handlePasswordChange = useCallback(
+    text => {
+      setPassword(text);
+    },
+    [setPassword],
+  );
 
   return (
     <KeyboardAvoidingView
@@ -63,12 +77,12 @@ export default function LoginScreen(): JSX.Element {
             <CustomInput
               placeholder="Kullanıcı Adı"
               value={username}
-              onChangeText={text => setUsername(text)}
+              onChangeText={handleUsernameChange}
             />
             <CustomInput
               placeholder="Parola"
               value={password}
-              onChangeText={text => setPassword(text)}
+              onChangeText={handlePasswordChange}
               secureTextEntry
             />
             <CustomButton onPress={handleLogin} label={'Giriş Yap'} />
