@@ -21,7 +21,7 @@ export default function LoginScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async () => {
     const requestData: LoginDto = {
       //TODO
       username: username,
@@ -44,26 +44,12 @@ export default function LoginScreen(): JSX.Element {
       onLoginFailed();
       console.error('Login error:', e);
     }
-  }, []);
+  };
 
   const onLoginFailed = useCallback(() => {
     Alert.alert('Giriş başarısız, lütfen bilgileriniz kontrol edin.');
     setIsLoading(false);
   }, []);
-
-  const handleUsernameChange = useCallback(
-    text => {
-      setUsername(text);
-    },
-    [setUsername],
-  );
-
-  const handlePasswordChange = useCallback(
-    text => {
-      setPassword(text);
-    },
-    [setPassword],
-  );
 
   return (
     <KeyboardAvoidingView
@@ -77,12 +63,13 @@ export default function LoginScreen(): JSX.Element {
             <CustomInput
               placeholder="Kullanıcı Adı"
               value={username}
-              onChangeText={handleUsernameChange}
+              onChangeText={text => setUsername(text)}
+              autoCapitalize="none"
             />
             <CustomInput
               placeholder="Parola"
               value={password}
-              onChangeText={handlePasswordChange}
+              onChangeText={text => setPassword(text)}
               secureTextEntry
             />
             <CustomButton onPress={handleLogin} label={'Giriş Yap'} />
